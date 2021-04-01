@@ -1,5 +1,4 @@
-
-name: 百度极速版
+name: baidu_speed
 on:
   workflow_dispatch:
   schedule:
@@ -9,6 +8,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    environment: BAIDU
     if: github.event.repository.owner.id == github.event.sender.id
     env:
         BAIDU_COOKIE: ${{ secrets.BAIDU_COOKIE }}
@@ -25,12 +25,13 @@ jobs:
         run: |
           cd ~/Scripts
           npm install
-      - name: '运行 【百度极速】'
+      - name: 'Run baidu_speed'
         if: env.BAIDU_COOKIE
         run: |
           cd ~/Scripts
           node Task/baidu_speed.js
         env:
+          BAIDU_CASH: ${{ secrets.BAIDU_CASH }}
           PUSH_KEY: ${{ secrets.PUSH_KEY }}
           BARK_PUSH: ${{ secrets.BARK_PUSH }}
           TG_BOT_TOKEN: ${{ secrets.TG_BOT_TOKEN }}
